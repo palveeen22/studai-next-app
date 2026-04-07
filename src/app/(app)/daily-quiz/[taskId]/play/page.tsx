@@ -108,7 +108,7 @@ export default function DailyQuizPlayPage() {
         ) : (
           <div className="flex flex-col items-center py-16 text-center">
             <div className="text-5xl mb-4">😓</div>
-            <p className="text-[#27355B] font-extrabold mb-1">Couldn`&lsquo;`t generate questions</p>
+            <p className="text-[#27355B] font-extrabold mb-1">Couldn&lsquo;t generate questions</p>
             <p className="text-[#7B8FB5] text-sm mb-6">Please check your connection and try again.</p>
             <ButtonCustom onClick={() => window.location.reload()} color="blue" size="md">
               Retry

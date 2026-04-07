@@ -66,7 +66,7 @@ export function TaskProgressCard({ completed, total }: TaskProgressCardProps) {
   return (
     <motion.div variants={item}>
       <StatCard>
-        <SectionLabel>Today`&lsquo;`s Tasks</SectionLabel>
+        <SectionLabel>Today&lsquo;s Tasks</SectionLabel>
         <div className="flex items-end justify-between mb-3">
           <p className="text-4xl font-extrabold text-[#27355B] leading-none">{pct}%</p>
           <span className={`text-xs font-extrabold px-2.5 py-1 rounded-full ${done ? 'bg-[#58CC02]/10 text-[#58CC02]' : 'bg-[#EEF2FA] text-[#7B8FB5]'}`}>
