@@ -33,7 +33,7 @@ export const Navbar = () => {
 
         <div className={`${scrolled ? 'opacity-0' : 'opacity-100'} transition-all duration-300`}>
           <ButtonCustom size="sm" color="gold" href="/login">
-            Let's try
+            Let`&lsquo;`s try
           </ButtonCustom>
         </div>
 

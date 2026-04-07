@@ -69,7 +69,7 @@ export default function TutorPage() {
             </div>
             <h2 className="text-lg font-extrabold text-[#27355B] mb-1">Your AI Study Buddy</h2>
             <p className="text-sm text-[#7B8FB5] max-w-xs leading-relaxed mb-6">
-              I can explain complex topics, help with analogies, and quiz you on what you've learned.
+              I can explain complex topics, help with analogies, and quiz you on what you`&lsquo;`ve learned.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {SUGGESTION_PROMPTS.map((prompt) => (

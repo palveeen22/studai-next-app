@@ -36,7 +36,7 @@ interface DarkInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   rightSlot?: React.ReactNode;
 }
 
-function DarkInput({ className, rightSlot, ...props }: DarkInputProps) {
+function DarkInput({ rightSlot, ...props }: DarkInputProps) {
   return (
     <div className="relative">
       <input

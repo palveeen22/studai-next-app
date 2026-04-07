@@ -18,10 +18,10 @@ const TIER_CONFIG = {
   premium: { label: 'Premium', emoji: '👑', bg: 'bg-[#FFFBEB]', text: 'text-[#27355B]', shadow: '#FDE68A' },
 };
 
-const STAT_ITEMS = [
-  { emoji: '📅', label: 'Member since' },
-  { emoji: '✉️', label: 'Email' },
-];
+// const STAT_ITEMS = [
+//   { emoji: '📅', label: 'Member since' },
+//   { emoji: '✉️', label: 'Email' },
+// ];
 
 export function ProfileView({ user, subscription }: ProfileViewProps) {
   const router = useRouter();

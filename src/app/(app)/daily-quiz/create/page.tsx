@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
-import { Input, Label } from '@/shared/ui/components';
 import { ButtonCustom } from '@/shared/ui/buttonCustom';
 import { DAILY_QUIZ } from '@/shared/constants';
 import { useCreateDailyQuizMutation } from '@/features/daily-quiz/model/useDailyQuizTasks';

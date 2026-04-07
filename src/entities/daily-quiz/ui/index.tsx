@@ -16,7 +16,7 @@ interface QuizDayNodeProps {
   onClick?: () => void;
 }
 
-export function QuizDayNode({ dayIndex, status, score, onClick }: QuizDayNodeProps) {
+export function QuizDayNode({ status, score, onClick }: QuizDayNodeProps) {
   return (
     <motion.button
       whileHover={status !== 'locked' ? { scale: 1.1, y: -2 } : undefined}
