@@ -53,8 +53,8 @@ app → pages → widgets → features → entities → shared
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/palveeen22/Studai-next-app.git
-cd Studai-next-app
+git clone https://github.com/palveeen22/studai-next-app.git
+cd studai-next-app
 pnpm install
 ```
 
