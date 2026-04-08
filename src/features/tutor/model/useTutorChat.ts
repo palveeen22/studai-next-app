@@ -21,6 +21,8 @@ export function useTutorChat() {
         body: JSON.stringify({ messages: updatedMessages }),
       });
 
+      console.log(res);
+
       if (!res.ok) throw new Error('Failed to get response');
 
       const reader = res.body?.getReader();
