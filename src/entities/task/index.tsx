@@ -53,7 +53,7 @@ export function TaskCheckbox({ checked, onChange, disabled }: TaskCheckboxProps)
         'flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200',
         checked
           ? 'border-[#F5C542] bg-[#F5C542]'
-          : 'border-gray-300 hover:border-[#F5C542]/50'
+          : 'border-gray-300 group-hover:border-[#F5C542]/50'
       )}
     >
       {checked && (

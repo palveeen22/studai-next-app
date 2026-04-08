@@ -99,7 +99,7 @@ export function CreateSubjectDialog({ open, onOpenChange, onSubmit, isLoading }:
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <div className="bg-white rounded-2xl p-6 shadow-2xl w-full max-w-sm mx-4">
+      <div className="bg-white rounded-2xl p-6 shadow-2xl w-fullmx-4">
         <h2 className="text-lg font-extrabold text-[#27355B] mb-5">New Subject</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
 

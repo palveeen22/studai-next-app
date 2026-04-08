@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar } from 'lucide-react';
-import type { Task, Subject, CreateTaskPayload } from '@/shared/types';
-import { cn } from '@/shared/lib/utils';
-import { TaskCheckbox, TaskStatusBadge } from '@/entities/task';
-import { SubjectPill } from '@/entities/subject';
-import { ButtonCustom } from '@/shared/ui/buttonCustom';
-import { Textarea } from '@/shared/ui/components';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar } from "lucide-react";
+import type { Task, Subject, CreateTaskPayload } from "@/shared/types";
+import { cn } from "@/shared/lib/utils";
+import { TaskCheckbox, TaskStatusBadge } from "@/entities/task";
+import { SubjectPill } from "@/entities/subject";
+import { ButtonCustom } from "@/shared/ui/buttonCustom";
+import { Textarea } from "@/shared/ui/components";
 
 // ─── TaskItem ─────────────────────────────────────────────────────────────────
 
@@ -19,41 +19,77 @@ interface TaskItemProps {
   showSubject?: boolean;
 }
 
-export function TaskItem({ task, onToggle, onDelete, showSubject = false }: TaskItemProps) {
+export function TaskItem({
+  task,
+  onToggle,
+  onDelete,
+  showSubject = false,
+}: TaskItemProps) {
   return (
     <motion.div
       layout
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -16 }}
-      className="group flex items-center gap-3 rounded-2xl border-2 border-[#E8ECF4] bg-white p-4 shadow-[0_3px_0_#D1D7E8] transition-all hover:border-[#27355B]/20"
+      onClick={() => onToggle(task.id)}
+      className="group flex cursor-pointer items-center gap-3 rounded-2xl border-2 border-[#E8ECF4] bg-white p-4 shadow-[0_3px_0_#D1D7E8] transition-all duration-200 hover:-translate-y-px hover:border-[#27355B]/30 hover:bg-[#F8FAFF] hover:shadow-[0_6px_0_#D1D7E8]"
     >
-      <TaskCheckbox checked={task.completed} onChange={() => onToggle(task.id)} />
+      {/* Checkbox (stop propagation biar tidak double toggle) */}
+      <div onClick={(e) => e.stopPropagation()}>
+        <TaskCheckbox
+          checked={task.completed}
+          onChange={() => onToggle(task.id)}
+        />
+      </div>
 
+      {/* Content */}
       <div className="min-w-0 flex-1">
-        <p className={cn(
-          'text-sm font-extrabold text-[#27355B]',
-          task.completed && 'text-[#B0BDD4] line-through'
-        )}>
+        <p
+          className={cn(
+            "text-sm font-extrabold text-[#27355B] transition-colors",
+            task.completed && "text-[#B0BDD4] line-through",
+          )}
+        >
           {task.title}
         </p>
+
         {task.description && (
-          <p className="mt-0.5 truncate text-xs text-[#7B8FB5] font-medium">{task.description}</p>
+          <p className="mt-0.5 truncate text-xs font-medium text-[#7B8FB5]">
+            {task.description}
+          </p>
         )}
-        <div className="mt-1.5 flex items-center gap-2 flex-wrap">
+
+        <div className="mt-1.5 flex flex-wrap items-center gap-2">
           {showSubject && task.subjects && (
-            <SubjectPill name={task.subjects.name} icon={task.subjects.icon} color={task.subjects.color} />
+            <SubjectPill
+              name={task.subjects.name}
+              icon={task.subjects.icon}
+              color={task.subjects.color}
+            />
           )}
-          <TaskStatusBadge completed={task.completed} deadline={task.deadline} />
+          <TaskStatusBadge
+            completed={task.completed}
+            deadline={task.deadline}
+          />
         </div>
       </div>
 
+      {/* Delete Button (ONLY button interaction) */}
       <button
-        onClick={() => onDelete(task.id)}
-        className="rounded-xl p-2 text-[#C5CEDD] opacity-0 transition-all hover:bg-red-50 hover:text-red-400 group-hover:opacity-100"
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(task.id);
+        }}
+        className="rounded-xl p-2 text-[#C5CEDD] opacity-0 transition-all duration-200
+                   hover:bg-red-50 hover:text-red-500 group-hover:opacity-100"
       >
         <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-          <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" />
+          <path
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"
+          />
         </svg>
       </button>
     </motion.div>
@@ -70,12 +106,20 @@ interface TaskListProps {
   emptyMessage?: string;
 }
 
-export function TaskList({ tasks, onToggle, onDelete, showSubject = false, emptyMessage = 'No tasks yet' }: TaskListProps) {
+export function TaskList({
+  tasks,
+  onToggle,
+  onDelete,
+  showSubject = false,
+  emptyMessage = "No tasks yet",
+}: TaskListProps) {
   if (tasks.length === 0) {
     return (
       <div className="flex flex-col items-center py-10 text-center">
         <span className="text-4xl mb-3">✅</span>
-        <p className="font-extrabold text-[#27355B] text-sm mb-1">{emptyMessage}</p>
+        <p className="font-extrabold text-[#27355B] text-sm mb-1">
+          {emptyMessage}
+        </p>
         <p className="text-xs text-[#7B8FB5]">Create a task to get started.</p>
       </div>
     );
@@ -85,7 +129,13 @@ export function TaskList({ tasks, onToggle, onDelete, showSubject = false, empty
     <div className="space-y-2">
       <AnimatePresence mode="popLayout">
         {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} showSubject={showSubject} />
+          <TaskItem
+            key={task.id}
+            task={task}
+            onToggle={onToggle}
+            onDelete={onDelete}
+            showSubject={showSubject}
+          />
         ))}
       </AnimatePresence>
     </div>
@@ -102,7 +152,7 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function DarkInput(props: React.ComponentProps<'input'>) {
+function DarkInput(props: React.ComponentProps<"input">) {
   return (
     <input
       {...props}
@@ -118,18 +168,28 @@ interface TaskFormProps {
   defaultSubjectId?: string;
 }
 
-export function TaskForm({ subjects, onSubmit, isLoading, defaultSubjectId }: TaskFormProps) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [subjectId, setSubjectId] = useState(defaultSubjectId || '');
-  const [deadline, setDeadline] = useState('');
+export function TaskForm({
+  subjects,
+  onSubmit,
+  isLoading,
+  defaultSubjectId,
+}: TaskFormProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [subjectId, setSubjectId] = useState(defaultSubjectId || "");
+  const [deadline, setDeadline] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ subject_id: subjectId, title, description: description || undefined, deadline: deadline || undefined });
-    setTitle('');
-    setDescription('');
-    setDeadline('');
+    onSubmit({
+      subject_id: subjectId,
+      title,
+      description: description || undefined,
+      deadline: deadline || undefined,
+    });
+    setTitle("");
+    setDescription("");
+    setDeadline("");
   };
 
   return (
@@ -149,7 +209,9 @@ export function TaskForm({ subjects, onSubmit, isLoading, defaultSubjectId }: Ta
         >
           <option value="">Select a subject</option>
           {subjects.map((s) => (
-            <option key={s.id} value={s.id}>{s.icon} {s.name}</option>
+            <option key={s.id} value={s.id}>
+              {s.icon} {s.name}
+            </option>
           ))}
         </select>
       </div>
@@ -178,7 +240,7 @@ export function TaskForm({ subjects, onSubmit, isLoading, defaultSubjectId }: Ta
       <div>
         <FieldLabel>Deadline (optional)</FieldLabel>
         <div className="relative">
-          <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#B0BDD4]" />
+          {/* <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#B0BDD4]" /> */}
           <DarkInput
             type="datetime-local"
             value={deadline}
@@ -188,8 +250,14 @@ export function TaskForm({ subjects, onSubmit, isLoading, defaultSubjectId }: Ta
         </div>
       </div>
 
-      <ButtonCustom type="submit" color="navy" size="lg" className="w-full" disabled={isLoading}>
-        {isLoading ? 'Creating…' : '+ Create Task'}
+      <ButtonCustom
+        type="submit"
+        color="navy"
+        size="lg"
+        className="w-full"
+        disabled={isLoading}
+      >
+        {isLoading ? "Creating…" : "+ Create Task"}
       </ButtonCustom>
     </motion.form>
   );
